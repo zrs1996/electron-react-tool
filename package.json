@@ -1,0 +1,47 @@
+{
+  "name": "electron-react-tool",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "dev": "vite",
+    "app:start": "electron .",
+    "start": "concurrently \"npm run dev\" \"npm run app:start\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build-renderer": "webpack --config webpack.config.js --mode production",
+    "render": "webpack server --config webpack.config.js  --mode development",
+    "package": "electron-packager . electron-photo-viewer --platform=win32 --arch=x64 --out=./out --asar --ignore=node_modules --app-version=1.0.0 --overwrite ",
+    "out": "npm run build-renderer & npm run package"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "latest",
+    "@babel/polyfill": "latest",
+    "babel-preset-es2015": "latest",
+    "browserify-zlib": "latest",
+    "buffer": "latest",
+    "crypto-browserify": "latest",
+    "deprecate": "latest",
+    "electron": "latest",
+    "express": "latest",
+    "fs": "latest",
+    "path": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "send": "latest",
+    "stream-browserify": "latest",
+    "stream-http": "latest",
+    "url": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^3.1.0",
+    "concurrently": "latest",
+    "less": "^4.1.3",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0",
+    "wait-on": "latest"
+  }
+}

@@ -18,6 +18,7 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "latest",
     "@babel/polyfill": "latest",
+    "@types/uuid": "^9.0.1",
     "babel-preset-es2015": "latest",
     "browserify-zlib": "latest",
     "buffer": "latest",
@@ -32,7 +33,8 @@
     "send": "latest",
     "stream-browserify": "latest",
     "stream-http": "latest",
-    "url": "latest"
+    "url": "latest",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

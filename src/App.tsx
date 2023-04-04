@@ -1,10 +1,9 @@
-import FrontApp from './pages/FrontApp'
-import './App.css'
+import Home from './pages/Home'
 
 function App() {
   return (
     <div className="App">
-     <FrontApp />
+     <Home />
     </div>
   )
 }

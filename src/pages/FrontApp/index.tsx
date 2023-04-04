@@ -1,75 +1,44 @@
-import { useState } from 'react'
-import Switch from '../../components/switch'
+import { ReactNode, useState, useEffect } from 'react'
+import { keyType, ObjectType, DataType } from '../../common/type'
 import Input from '../../components/input'
-import Electron from '../../electron/index';
 import { copy } from '../../common/utils';
 import './index.less'
-
+import { getGlobalStore, setGlobalStore } from '../../store';
+import { subscribeNotify } from '../../notify';
 interface ItemI { [key: string]: string }
 interface HashI { [key: string]: { [key: string]: string } }
 
 const FrontApp = ({
 }) => {
-  const [list, setList] = useState([] as Array<string>);
-  const [switchFlag, setSwitchFlag] = useState(false);
-  const [appName, setAppName] = useState({} as HashI);
+  const [appMap, setAppMap] = useState(getGlobalStore('frontAppMap') || new Map());
 
-  const addFrontApp = async (id: string, isRoot = false) => {
-    const path = await Electron.showOpenDialog()
-    const temp = copy(appName)
-    temp[id].path = path;
-    temp[id].isRoot = isRoot;
-    setAppName(temp)
-  }
-  const addAppItem = () => {
-    const listTemp = copy(list);
-    const temp = copy(appName)
-    const id = `${Date.now()}`; listTemp.push(id)
-    setList(listTemp)
-    temp[id] = { value: '', path: '', isRoot: false }
-    setAppName(temp)
-  }
-  const getApp = (id: string) => {
-    if (switchFlag) {
-      return <Input
-        key={id}
-        type='root'
-        value={appName[id] ? appName[id].vaule : ''}
-        buttonText='设置根目录路径'
-        path={appName[id] ? appName[id].path : ''}
-        callback={() => addFrontApp(id, true)}
-        onChange={(value) => {
-          const temp = copy(appName)
-          temp[id].value = value
-          setAppName(temp)
-        }}
-      />
-    }
-    return <Input
-      key={id}
-      value={appName[id] ? appName[id].vaule : ''}
-      type='app'
-      buttonText='设置应用路径'
-      path={appName[id] ? appName[id].path : ''}
-      callback={() => addFrontApp(id, false)}
-      onChange={(value) => {
-        const temp = copy(appName)
-        temp[id].value = value
-        setAppName(temp)
-      }}
-    />
-  }
-  return <div>
-    <Switch
-      switchFlag={switchFlag}
-      setSwitchFlag={setSwitchFlag}
-      switchText={['前端应用', '前端根目录']}
-    />
-    <div className='button' onClick={addAppItem}>新增应用</div>
-    {list.map(id => {
-      return getApp(id);
+  useEffect(() => {
+    subscribeNotify('onFrontAppMap', (newAppMap: any) => {
+      setAppMap(newAppMap)
     })
-    }
-  </div>;
+  });
+
+  const onFrontAppClick = () => {
+    console.log('appMap', appMap);
+  }
+
+  const removeFrontApp = (app: ObjectType) => {
+    const tempAppMap = new Map(appMap)
+    tempAppMap.delete(app.id)
+    setAppMap(tempAppMap)
+    setGlobalStore('frontAppMap', tempAppMap, 'map', true)
+  }
+
+  const renderList = () => {
+    const res: JSX.Element[] = []
+    appMap.forEach((item: ObjectType) => {
+      res.push(<div key={item.id} onClick={onFrontAppClick}>
+        <div>{item.id}</div>
+        <div onClick={() => removeFrontApp(item)}>删除</div>
+      </div>)
+    })
+    return res;
+  }
+  return <div>{renderList()}</div>;
 };
 export default FrontApp;

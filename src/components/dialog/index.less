@@ -1,0 +1,66 @@
+.com_dialog {
+  .com_dialog_mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition-property: background-color;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.4);
+    pointer-events: auto;
+  }
+  .com_dialog_content {
+    position: relative;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    max-height: 90%;
+    transform: scale(1);
+    .com_dialog_header {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      border-bottom: 0 none;
+      background: #ffffff;
+      color: #343a40;
+      padding: 1.5rem;
+      border-top-right-radius: 6px;
+      border-top-left-radius: 6px;
+      .com_dialog_header_title {
+        font-weight: 700;
+        font-size: 1.25rem;
+        flex-grow: 1;
+        text-align: left;
+      }
+      .com_dialog_header_icon {
+        padding: 5px;
+        border-radius: 50%;
+        cursor: pointer;
+        &:hover {
+          background-color: #e9ecef;
+        }
+      }
+    }
+    .com_dialog_body {
+      background: #ffffff;
+      color: #495057;
+      padding: 0 1.5rem 2rem 1.5rem;
+    }
+    .com_dialog_footer {
+      display: flex;
+      justify-content: flex-end;
+      border-top: 0 none;
+      background: #ffffff;
+      color: #495057;
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      text-align: right;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+  }
+}

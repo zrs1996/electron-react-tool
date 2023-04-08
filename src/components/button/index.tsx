@@ -4,7 +4,7 @@ interface ButtonProps {
   title: string,
   theme?: ThemeToClassType,
   text?: boolean | undefined,
-  onClick?: () => void | undefined | Promise<void>,
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent> | void) => void | undefined | Promise<void>,
 }
 const Button = (props: ButtonProps) => {
   const { title, onClick, theme, text } = props;
@@ -29,7 +29,7 @@ const Button = (props: ButtonProps) => {
     }
     return name
   }
-  return <div className={getClassName()} onClick={ onClick ? onClick : () => {}}>
+  return <div className={getClassName()} onClick={(e) => onClick ? onClick(e) : () => {}}>
     <div>{title}</div>
   </div>
 }

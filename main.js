@@ -15,7 +15,6 @@ function createWindow(app) {
       webSecurity: false
     },
   });
-  console.log(app.isPackaged);
   if (app.isPackaged) {
     win.loadFile("./dist/index.html");
   } else {

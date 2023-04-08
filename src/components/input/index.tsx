@@ -1,54 +1,55 @@
 import './index.less'
 
-type ThemeToClassType = 'submit' | 'success' | 'info' | 'warning' | 'help' | 'danger' | 'secondary'
+type ThemeToClassType = 'dark' | 'light' | void
 
 interface InputI {
   value: string,
   id?: string,
-  path?: string | undefined,
+  placeholder?: string,
   type?: string | undefined,
-  buttonText?: string | undefined,
   className?: string | undefined,
-  callback?: () => {},
-  onChange?: (event: any) => void | {}
+  theme?: ThemeToClassType,
+  disabled?: boolean | undefined,
+  maxLength?: number | undefined,
+  onChange?: (value: string) => void
 }
 const Input = (props: InputI) => {
   const {
     value,
-    path,
-    buttonText,
+    placeholder,
     className,
-    callback,
+    theme = 'light',
+    disabled,
+    maxLength,
     onChange,
   } = props;
 
   const themeToClass = {
-    submit: 'com_button_submit',
-    success: 'com_button_success',
-    secondary: 'com_button_secondary',
-    info: 'com_button_info',
-    warning: 'com_button_warning',
-    help: 'com_button_help',
-    danger: 'com_button_danger',
+    dark: 'com_input_dark',
+    light: 'com_input_light'
   }
 
   const getClassName = () => {
-    let name = 'com_button'
-    if (text) {
-      name += ' com_button_text'
+    let name = 'com_input'
+    if (theme && themeToClass[theme]) {
+      name += ` ${themeToClass[theme]}`
     }
-    if (theme) {
-      if (themeToClass[theme]) {
-        name += ` ${themeToClass[theme]}`
-      }
+    if (className) {
+      name += ` ${className}`
     }
     return name
   }
-  
-  return <div className={`input_wrap ${className}`}>
-    <input type="text" value={value} maxLength={20} onChange={(e) => onChange && onChange(e.target.value)} />
-    {buttonText && <div className='button' onClick={() => callback && callback()}>{buttonText}</div>}
-    {path && <div>{path}</div>}
+
+  return <div className={getClassName()}>
+    <input
+      className='com_input_input'
+      type="text"
+      disabled={disabled}
+      value={value || ''}
+      placeholder={placeholder || ''}
+      maxLength={maxLength || 20}
+      onChange={(e) => onChange && onChange(e.target.value)}
+    />
   </div>
 }
 export default Input;

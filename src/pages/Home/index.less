@@ -7,6 +7,33 @@
     padding: 10px;
     text-align: center;
     min-width: 100px;
+    &>div+div {
+      margin-top: 5px;
+    }
+    .dialog_form_for_app_setting {
+      min-width: 400px;
+      width: max-content;
+    }
+    .app_setting_body {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      > div {
+        margin-bottom: 5px;
+      }
+      .set_project_path_wrap {
+        display: flex;
+        flex-direction: row;
+        .project_value_text {
+          >input {
+            min-width: max-content;
+            width: 300px;
+            max-width: 300px;
+          }
+        }
+      }
+    }
   }
   .content {
     flex: 1;

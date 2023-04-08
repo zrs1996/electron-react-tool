@@ -1,10 +1,9 @@
 import { useState, useEffect, MouseEvent } from 'react'
-import { keyType, ObjectType, DataType } from '../../common/type'
-import Input from '../../components/input'
-import { copy } from '../../common/utils';
+import { ObjectType } from '../../common/type'
 import './index.less'
 import { getGlobalStore, setGlobalStore } from '../../store';
 import { subscribeNotify } from '../../notify';
+import Button from 'components/button'
 
 const FrontApp = ({
 }) => {
@@ -12,7 +11,9 @@ const FrontApp = ({
 
   useEffect(() => {
     subscribeNotify('onFrontAppMap', (newAppMap: any) => {
-      setAppMap(newAppMap)
+      const tempAppMap = new Map(appMap)
+      tempAppMap.set(newAppMap.id, newAppMap)
+      setAppMap(tempAppMap)
     })
   });
 
@@ -32,13 +33,13 @@ const FrontApp = ({
   const renderList = () => {
     const res: JSX.Element[] = []
     appMap.forEach((item: ObjectType) => {
-      res.push(<div key={item.id} onClick={(e) => onFrontAppClick(e, item)}>
-        <div>{item.id}</div>
-        <div onClick={(e) => removeFrontApp(e, item)}>删除</div>
+      res.push(<div className='front_app_li' key={item.id} onClick={(e) => onFrontAppClick(e, item)}>
+        <div>{item.appName}</div>
+        <Button title='删除' onClick={(e) => removeFrontApp(e as MouseEvent<HTMLDivElement, globalThis.MouseEvent>, item)} />
       </div>)
     })
     return res;
   }
-  return <div>{renderList()}</div>;
+  return <div className='front_app_list'>{renderList()}</div>;
 };
 export default FrontApp;

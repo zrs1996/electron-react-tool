@@ -1,5 +1,6 @@
 const { ipcMain, dialog  } = require("electron");
 const LocalServer = require("../node/startLocalServer");
+const Store = require("../utils/store");
 
 async function showOpenDialog() {
     const { canceled, filePaths } = await dialog.showOpenDialog({
@@ -25,8 +26,11 @@ function ipcer(win) {
     ipcMain.on("onTop", function () {
         win.setAlwaysOnTop(true);
     });
+    ipcMain.on("initFrontAppMap", function (event, appMap) {
+        Store.set('frontAppMap', appMap)
+    });
     ipcMain.on("startLocalServer", function (event, app) {
-        pool.localServer = new LocalServer(app)
+        pool.localServer = new LocalServer(win, app || Store.get('frontAppMap'))
         pool.localServer.run()
     });
     ipcMain.on("closeLocalServer", function () {

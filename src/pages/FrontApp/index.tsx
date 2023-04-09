@@ -1,5 +1,5 @@
 import { useState, useEffect, MouseEvent } from 'react'
-import { ObjectType } from '../../common/type'
+import { ObjectType, FrontAppType } from '../../common/type'
 import './index.less'
 import { getGlobalStore, setGlobalStore } from '../../store';
 import { subscribeNotify } from '../../notify';
@@ -10,7 +10,7 @@ const FrontApp = ({
   const [appMap, setAppMap] = useState(getGlobalStore('frontAppMap') || new Map());
 
   useEffect(() => {
-    subscribeNotify('onFrontAppMap', (newAppMap: any) => {
+    subscribeNotify('onFrontAppMap', (newAppMap: FrontAppType) => {
       const tempAppMap = new Map(appMap)
       tempAppMap.set(newAppMap.id, newAppMap)
       setAppMap(tempAppMap)
@@ -22,7 +22,7 @@ const FrontApp = ({
     console.log('item', item);
   }
 
-  const removeFrontApp = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, app: ObjectType) => {
+  const removeFrontApp = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, app: FrontAppType) => {
     e.stopPropagation();
     const tempAppMap = new Map(appMap)
     tempAppMap.delete(app.id)

@@ -6,7 +6,7 @@ let win = null;
 
 function createWindow(app) {
   win = new BrowserWindow({
-    width: 1080,
+    width: 1280,
     height: 720,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -19,7 +19,9 @@ function createWindow(app) {
     win.loadFile("./dist/index.html");
   } else {
     win.loadURL(`http://localhost:3366/`);
-    win.webContents.openDevTools();
+    setTimeout(() => {
+      win.webContents.openDevTools();
+    }, 1000)
   }
   runApp(win)
 }

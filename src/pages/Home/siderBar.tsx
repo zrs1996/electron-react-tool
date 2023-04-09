@@ -83,7 +83,7 @@ const SiderBar = () => {
     </Dialog>
     <Button title='启动本地服务' onClick={startLocalServer} />
     <Button title='关闭本地服务' onClick={closeLocalServer} />
-    <Button title='重启本地服务' onClick={restartLocalServer} />
+    {/* <Button title='重启本地服务' onClick={restartLocalServer} /> */}
   </div>;
 }
 
